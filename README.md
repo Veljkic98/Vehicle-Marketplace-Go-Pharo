@@ -14,10 +14,13 @@
 
 ### Spring boot
 - Koristi se za prvi deo backend aplikacije.
+- CRUD operacije
 - Komuniciranje sa bazom.
 
 ### Golang
-- Koristi se za drugi deo backend aplikacije, kao sto su pretrage, filtriranje i sortiranje. Podatke dobavlja sa prve backend aplikacije.
+- Koristi se za drugi deo backend aplikacije, kao sto su pretrage, filtriranje i sortiranje. 
+- Podatke dobavlja sa prve backend aplikacije.
 
 ### Pharo
 - Korsiti se za razvoj klijentskog dela aplikacije.
+- 
