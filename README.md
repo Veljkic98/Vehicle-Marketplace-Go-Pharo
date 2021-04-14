@@ -10,11 +10,6 @@
 ### Postgress
 - Baza podataka
 
-### Spring boot
-- Koristi se za prvi deo backend aplikacije.
-- CRUD operacije
-- Komuniciranje sa bazom.
-
 ### Golang
 - Koristi se za razvoj backend dela aplikacije.
 - Tu spadaju sve funkcionalnosti koje su nabrojane u opisu, kao sto su: pretraga, filtriranje, sortiranje, komentarisanje i ocenjivanje.
