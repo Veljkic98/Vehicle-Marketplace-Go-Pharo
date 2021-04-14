@@ -16,9 +16,8 @@
 - Komuniciranje sa bazom.
 
 ### Golang
-- Koristi se za drugi deo backend aplikacije, kao sto su pretrage, filtriranje i sortiranje. 
-- Podatke dobavlja sa prve backend aplikacije.
+- Koristi se za razvoj backend dela aplikacije.
+- Tu spadaju sve funkcionalnosti koje su nabrojane u opisu, kao sto su: pretraga, filtriranje, sortiranje, komentarisanje i ocenjivanje.
 
 ### Pharo
 - Korsiti se za razvoj klijentskog dela aplikacije.
-- 
