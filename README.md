@@ -1,11 +1,9 @@
 # Projekat Polovni Automobili - NTP
 
 ## Opis aplikacije
-- Postoje 3 uloge u sistemu: Neulogovani korisnik, ulogovano korisnik (oglasivac) i admin.
-- Neulogovani korisnici mogu samo da pregledaju oglase. 
-- Ulogovani korisnici mogu i da pregledaju, kace i brisu oglase. Mogu da komentarisu i da ocene oglas.
-- Admin moze da dodaje, izmeni i obrise marke i modele vozila.
-- Svi korisnici mogu da pretrazuju oglase po markama i modelima, po lokaciji, snazi motora i ostalim karakteristikama vozila. Mogu da sortiraju oglase po ceni i datumu postavljanja oglasa.
+- U sistemu postoji samo neulogovani korisnik
+- Korisnici mogu samo da pregledaju oglase. Mogu da komentarisu i da ocene oglas.
+- Korisnici mogu da pretrazuju oglase po markama i modelima, po lokaciji, snazi motora i ostalim karakteristikama vozila. Mogu da sortiraju oglase po ceni i datumu postavljanja oglasa.
 
 ## Tehnologije
 
