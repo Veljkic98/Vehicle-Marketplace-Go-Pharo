@@ -18,7 +18,6 @@ var (
 )
 
 func main() {
-
 	const port string = ":8000"
 
 	httpRouter.GET("/", func(w http.ResponseWriter, r *http.Request) {

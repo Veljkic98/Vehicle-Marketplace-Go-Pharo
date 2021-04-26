@@ -41,7 +41,7 @@ func (*controller) GetAllVehicles(response http.ResponseWriter, request *http.Re
 
 func (*controller) SaveVehicle(response http.ResponseWriter, request *http.Request) {
 
-	fmt.Printf("------------------------------------------")
+	fmt.Println("-------------------save vehicle controller-----------------------")
 	response.Header().Set("Content-Type", "application/json")
 
 	var vehicle model.Vehicle
@@ -51,6 +51,7 @@ func (*controller) SaveVehicle(response http.ResponseWriter, request *http.Reque
 	if err != nil {
 		response.WriteHeader(http.StatusInternalServerError)
 		json.NewEncoder(response).Encode(model.ServiceError{Message: "Error unmarshaling data"})
+		fmt.Println("Greska1")
 		return
 	}
 
@@ -59,6 +60,7 @@ func (*controller) SaveVehicle(response http.ResponseWriter, request *http.Reque
 	if err1 != nil {
 		response.WriteHeader(http.StatusInternalServerError)
 		json.NewEncoder(response).Encode(model.ServiceError{Message: err1.Error()})
+		fmt.Println("Greska2")
 		return
 	}
 
