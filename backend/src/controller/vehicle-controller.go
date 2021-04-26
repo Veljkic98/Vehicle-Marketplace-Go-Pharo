@@ -9,8 +9,9 @@ import (
 )
 
 type VehicleController interface {
-	GetAllVehicles(response http.ResponseWriter, request *http.Request)
-	SaveVehicle(response http.ResponseWriter, request *http.Request)
+	GetAll(response http.ResponseWriter, request *http.Request)
+	Save(response http.ResponseWriter, request *http.Request)
+	DeleteAll(response http.ResponseWriter, request *http.Request)
 }
 
 type controller struct{}
@@ -24,7 +25,7 @@ func NewVehicleController(service service.VehicleService) VehicleController {
 	return &controller{}
 }
 
-func (*controller) GetAllVehicles(response http.ResponseWriter, request *http.Request) {
+func (*controller) GetAll(response http.ResponseWriter, request *http.Request) {
 
 	response.Header().Set("Content-Type", "application/json")
 
@@ -39,7 +40,7 @@ func (*controller) GetAllVehicles(response http.ResponseWriter, request *http.Re
 	json.NewEncoder(response).Encode(vehicles)
 }
 
-func (*controller) SaveVehicle(response http.ResponseWriter, request *http.Request) {
+func (*controller) Save(response http.ResponseWriter, request *http.Request) {
 
 	fmt.Println("-------------------save vehicle controller-----------------------")
 	response.Header().Set("Content-Type", "application/json")
@@ -74,4 +75,14 @@ func (*controller) SaveVehicle(response http.ResponseWriter, request *http.Reque
 
 	response.WriteHeader((http.StatusOK))
 	json.NewEncoder(response).Encode(result)
+}
+
+func (*controller) DeleteAll(response http.ResponseWriter, request *http.Request) {
+
+	response.Header().Set("Content-Type", "application/json")
+
+	vehicleService.DeleteAll()
+
+	response.WriteHeader(http.StatusOK)
+	json.NewEncoder(response)
 }

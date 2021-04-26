@@ -9,6 +9,7 @@ import (
 type VehicleRepository interface {
 	Save(car *model.Vehicle) (*model.Vehicle, error)
 	FindAll() ([]model.Vehicle, error)
+	DeleteAll()
 }
 
 type repo struct{}
@@ -27,7 +28,6 @@ func NewVehicleRepository() VehicleRepository {
 
 func (*repo) Save(vehicle *model.Vehicle) (*model.Vehicle, error) {
 
-	// TODO: save
 	fmt.Println(vehicle.Make)
 	fmt.Println(vehicle.Id)
 
@@ -79,9 +79,24 @@ func (*repo) FindAll() ([]model.Vehicle, error) {
 		cars = append(cars, model.Vehicle{Id: id, Make: make})
 	}
 
-	// cars = append(cars, model.Vehicle{Id: "111111", Make: "BMW"})
-
 	return cars, nil
+}
+
+func (*repo) DeleteAll() {
+
+	// connection string
+	psqlconn := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", host, port, user, password, dbname)
+
+	// open database
+	db, err := sql.Open("postgres", psqlconn)
+	CheckError(err)
+
+	// close database when return
+	defer db.Close()
+	// insert to db
+	insertStmt := `DELETE FROM "Vehicle"`
+	_, e := db.Exec(insertStmt)
+	CheckError(e)
 }
 
 func CheckError(err error) {

@@ -24,8 +24,9 @@ func main() {
 		fmt.Println(w, "Up and runing")
 	})
 
-	httpRouter.GET("/vehicles", vehicleController.GetAllVehicles)
-	httpRouter.POST("/vehicles", vehicleController.SaveVehicle)
+	httpRouter.GET("/vehicles", vehicleController.GetAll)
+	httpRouter.POST("/vehicles", vehicleController.Save)
+	httpRouter.DELETE("/vehicles/delete-all", vehicleController.DeleteAll)
 
 	httpRouter.SERVE(port)
 }

@@ -12,6 +12,7 @@ type VehicleService interface {
 	Validate(vehicle *model.Vehicle) error
 	Create(vehicle *model.Vehicle) (*model.Vehicle, error)
 	FindAll() ([]model.Vehicle, error)
+	DeleteAll()
 }
 
 type service struct{}
@@ -50,4 +51,9 @@ func (*service) Create(vehicle *model.Vehicle) (*model.Vehicle, error) {
 func (*service) FindAll() ([]model.Vehicle, error) {
 
 	return vehicleRepo.FindAll()
+}
+
+func (*service) DeleteAll() {
+
+	vehicleRepo.DeleteAll()
 }
