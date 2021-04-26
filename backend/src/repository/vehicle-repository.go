@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"model"
+	"time"
 )
 
 type VehicleRepository interface {
@@ -28,8 +29,10 @@ func NewVehicleRepository() VehicleRepository {
 
 func (*repo) Save(vehicle *model.Vehicle) (*model.Vehicle, error) {
 
+	fmt.Println("---------------------------------------")
 	fmt.Println(vehicle.Make)
 	fmt.Println(vehicle.Id)
+	fmt.Println(vehicle.Date)
 
 	// connection string
 	psqlconn := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", host, port, user, password, dbname)
@@ -42,8 +45,8 @@ func (*repo) Save(vehicle *model.Vehicle) (*model.Vehicle, error) {
 	defer db.Close()
 
 	// insert to db
-	insertStmt := `insert into "Vehicle"("id", "make") values($1, $2)`
-	_, e := db.Exec(insertStmt, vehicle.Id, vehicle.Make)
+	insertStmt := `insert into "Vehicle"("id", "make", "model", "date", "hp", "cubic") values($1, $2, $3, $4, $5, $6)`
+	_, e := db.Exec(insertStmt, vehicle.Id, vehicle.Make, vehicle.ModelCar, vehicle.Date, vehicle.HP, vehicle.Cubic)
 	CheckError(e)
 
 	return vehicle, nil
@@ -61,7 +64,7 @@ func (*repo) FindAll() ([]model.Vehicle, error) {
 	// close database
 	defer db.Close()
 
-	rows, err := db.Query(`SELECT "id", "make" FROM "Vehicle"`)
+	rows, err := db.Query(`SELECT "id", "make", "model", "date", "hp", "cubic" FROM "Vehicle"`)
 	CheckError(err)
 
 	defer rows.Close()
@@ -71,12 +74,17 @@ func (*repo) FindAll() ([]model.Vehicle, error) {
 	for rows.Next() {
 		var id string
 		var make string
+		var modelCar string
+		var date string
+		var hp int
+		var cubic int
 
-		err = rows.Scan(&id, &make)
+		err = rows.Scan(&id, &make, &modelCar, &date, &hp, &cubic)
 		CheckError(err)
 
-		// fmt.Println(id, make)
-		cars = append(cars, model.Vehicle{Id: id, Make: make})
+		const layout = "2006-01-02"
+		d, _ := time.Parse(layout, date[0:10])
+		cars = append(cars, model.Vehicle{Id: id, Make: make, ModelCar: modelCar, Date: d, HP: hp, Cubic: cubic})
 	}
 
 	return cars, nil
