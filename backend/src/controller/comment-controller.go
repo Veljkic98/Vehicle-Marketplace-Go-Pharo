@@ -7,34 +7,34 @@ import (
 	"service"
 )
 
-type OfferController interface {
+type CommentController interface {
 	GetAll(response http.ResponseWriter, request *http.Request)
 	// Save(response http.ResponseWriter, request *http.Request)
 	// DeleteAll(response http.ResponseWriter, request *http.Request)
 }
 
-type offerController struct{}
+type commentController struct{}
 
 var (
-	offerService service.OfferService
+	commentService service.CommentService
 )
 
-func NewOfferController(service service.OfferService) OfferController {
-	offerService = service
+func NewCommentController(service service.CommentService) CommentController {
+	commentService = service
 	return &controller{}
 }
 
-func (*offerController) GetAll(response http.ResponseWriter, request *http.Request) {
+func (*commentController) GetAll(response http.ResponseWriter, request *http.Request) {
 
 	response.Header().Set("Content-Type", "application/json")
 
-	offers, err := offerService.FindAll()
+	comments, err := commentService.FindAll()
 
 	if err != nil {
 		response.WriteHeader(http.StatusInternalServerError)
-		json.NewEncoder(response).Encode(model.ServiceError{Message: "Error getting the offers."})
+		json.NewEncoder(response).Encode(model.ServiceError{Message: "Error getting the comments"})
 	}
 
 	response.WriteHeader(http.StatusOK)
-	json.NewEncoder(response).Encode(offers)
+	json.NewEncoder(response).Encode(comments)
 }
