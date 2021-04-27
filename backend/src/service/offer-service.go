@@ -9,7 +9,7 @@ import (
 type OfferService interface {
 	Validate(offer *model.Offer) error
 	// Create(offer *model.Offer) (*model.Offer, error)
-	FindAll() ([]model.Offer, error)
+	FindAll(search *model.Search) ([]model.Offer, error)
 	// DeleteAll()
 }
 
@@ -39,7 +39,7 @@ func (*offerService) Validate(offer *model.Offer) error {
 	return nil
 }
 
-func (*offerService) FindAll() ([]model.Offer, error) {
+func (*offerService) FindAll(search *model.Search) ([]model.Offer, error) {
 
-	return offerRepo.FindAll()
+	return offerRepo.FindAll(search)
 }

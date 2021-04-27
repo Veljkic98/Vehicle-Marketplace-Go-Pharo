@@ -47,9 +47,6 @@ func (*vehicleController) Save(response http.ResponseWriter, request *http.Reque
 
 	var vehicle model.Vehicle
 
-	// This should be date format
-	// 2021-02-18T23:59:59.123Z
-
 	err := json.NewDecoder(request.Body).Decode(&vehicle)
 
 	if err != nil {

@@ -9,7 +9,7 @@ type Vehicle struct {
 	// Year      int
 	Id       string    `json:"id"`
 	Make     string    `json:"make"`
-	ModelCar string    `json:"model"`
+	ModelCar string    `json:"modelCar"`
 	Date     time.Time `json:"date"` // production date
 	HP       int       `json:"hp"`
 	Cubic    int       `json:"cubic"`

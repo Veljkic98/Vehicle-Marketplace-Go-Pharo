@@ -2,6 +2,7 @@ package controller
 
 import (
 	"encoding/json"
+	"fmt"
 	"model"
 	"net/http"
 	"service"
@@ -28,7 +29,18 @@ func (*offerController) GetAll(response http.ResponseWriter, request *http.Reque
 
 	response.Header().Set("Content-Type", "application/json")
 
-	offers, err := offerService.FindAll()
+	var search model.Search
+
+	err := json.NewDecoder(request.Body).Decode(&search)
+
+	if err != nil {
+		response.WriteHeader(http.StatusInternalServerError)
+		json.NewEncoder(response).Encode(model.ServiceError{Message: "Error unmarshaling data"})
+		fmt.Println("Greska1 offer cont")
+		return
+	}
+
+	offers, err := offerService.FindAll(&search)
 
 	if err != nil {
 		response.WriteHeader(http.StatusInternalServerError)
