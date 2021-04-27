@@ -28,7 +28,7 @@ func (*rateController) GetAll(response http.ResponseWriter, request *http.Reques
 
 	response.Header().Set("Content-Type", "application/json")
 
-	rates, err := raterService.FindAll()
+	rates, err := rateService.FindAll()
 
 	if err != nil {
 		response.WriteHeader(http.StatusInternalServerError)
