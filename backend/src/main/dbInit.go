@@ -74,35 +74,11 @@ func createTablesDB() {
 	CheckError(e)
 }
 
-/*
-Method to delete all tables.
-*/
-// func deleteAllTablesDB() {
-//
-// 	// connection string
-// 	psqlconn := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", host, port, user, password, dbname)
-//
-// 	// open database
-// 	db, err := sql.Open("postgres", psqlconn)
-// 	CheckError(err)
-//
-// 	// close database when return
-// 	defer db.Close()
-//
-// 	// insert to db
-// 	insertStmt := `
-// 	DELETE TABLE "Rate"
-// 	DELETE TABLE "Comment"
-// 	DELETE TABLE "Offer"
-// 	DELETE TABLE "Vehicle"
-// 	`
-// 	_, e := db.Exec(insertStmt)
-// 	CheckError(e)
-// }
-
 func CheckError(err error) {
 	if err != nil {
 		// panic(err)
-		fmt.Println("DB is already created.")
+		fmt.Println("DB tables are already created.")
+	} else {
+		fmt.Println("DB tables are created. :)")
 	}
 }
