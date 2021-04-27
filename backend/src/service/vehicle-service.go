@@ -15,7 +15,7 @@ type VehicleService interface {
 	DeleteAll()
 }
 
-type service struct{}
+type vehicleService struct{}
 
 var (
 	vehicleRepo repository.VehicleRepository
@@ -23,10 +23,10 @@ var (
 
 func NewVehicleService(repo repository.VehicleRepository) VehicleService {
 	vehicleRepo = repo
-	return &service{}
+	return &vehicleService{}
 }
 
-func (*service) Validate(vehicle *model.Vehicle) error {
+func (*vehicleService) Validate(vehicle *model.Vehicle) error {
 
 	if vehicle == nil {
 		err := errors.New("The vehicle is empty.")
@@ -41,19 +41,19 @@ func (*service) Validate(vehicle *model.Vehicle) error {
 	return nil
 }
 
-func (*service) Create(vehicle *model.Vehicle) (*model.Vehicle, error) {
+func (*vehicleService) Create(vehicle *model.Vehicle) (*model.Vehicle, error) {
 
 	vehicle.Id = uuid.New().String()
 
 	return vehicleRepo.Save(vehicle)
 }
 
-func (*service) FindAll() ([]model.Vehicle, error) {
+func (*vehicleService) FindAll() ([]model.Vehicle, error) {
 
 	return vehicleRepo.FindAll()
 }
 
-func (*service) DeleteAll() {
+func (*vehicleService) DeleteAll() {
 
 	vehicleRepo.DeleteAll()
 }
