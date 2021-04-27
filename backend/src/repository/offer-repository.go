@@ -33,6 +33,8 @@ func (*offerRepo) FindAll(search *model.Search) ([]model.Offer, error) {
 	// close database
 	defer db.Close()
 
+	searchPreprocess(search)
+
 	query := getQuery(search)
 
 	rows, err := db.Query(query, search.PriceFrom, search.PriceTo, search.HPFrom, search.HPTo,

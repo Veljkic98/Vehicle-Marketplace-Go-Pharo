@@ -12,10 +12,6 @@ import (
 */
 func getQuery(search *model.Search) string {
 
-	fmt.Println(search.PriceTo)
-	searchPreprocess(search)
-	fmt.Println(search.PriceTo)
-
 	query := `
 	SELECT "O"."id", "O"."price", "O"."publishDate", "O"."location", "V"."id", 
 	"V"."make", "V"."model", "V"."date", "V"."hp", "V"."cubic"
@@ -201,6 +197,6 @@ func searchPreprocess(search *model.Search) {
 	}
 
 	if search.CubicTo == 0 {
-		search.CubicTo = 9999
+		search.CubicTo = 99999
 	}
 }
