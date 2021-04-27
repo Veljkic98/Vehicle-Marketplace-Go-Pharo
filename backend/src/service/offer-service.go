@@ -31,7 +31,7 @@ func (*offerService) Validate(offer *model.Offer) error {
 		return err
 	}
 
-	if offer.VehicleId == "" {
+	if offer.Vehicle.Id == "" {
 		err := errors.New("the vehicle id is empty.")
 		return err
 	}

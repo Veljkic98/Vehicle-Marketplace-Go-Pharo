@@ -3,6 +3,11 @@ package main
 import (
 	"database/sql"
 	"fmt"
+	"model"
+	"time"
+
+	"github.com/google/uuid"
+	_ "github.com/lib/pq"
 )
 
 const (
@@ -72,13 +77,140 @@ func createTablesDB() {
 	`
 	_, e := db.Exec(insertStmt)
 	CheckError(e)
+
+	fmt.Println("---------- DB tables are created ----------")
+}
+
+/*
+	Create one entity for all tables.
+*/
+func createAllInit() {
+
+	var offer model.Offer
+	offer = getOffer()
+
+	// connection string
+	psqlconn := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", host, port, user, password, dbname)
+
+	// open database
+	db, err := sql.Open("postgres", psqlconn)
+	CheckError(err)
+
+	// close database when return
+	defer db.Close()
+
+	var insertStmt string
+
+	// insert vehicle into db
+	insertStmt = `insert into "Vehicle"("id", "make", "model", "date", "hp", "cubic") values($1, $2, $3, $4, $5, $6)`
+	_, e1 := db.Exec(insertStmt, offer.Vehicle.Id, offer.Vehicle.Make, offer.Vehicle.ModelCar,
+		offer.Vehicle.Date, offer.Vehicle.HP, offer.Vehicle.Cubic)
+	CheckError(e1)
+
+	// insert offer into db
+	insertStmt = `insert into "Offer"("id", "vehicleId", "price", "publishDate", "location") values($1, $2, $3, $4, $5)`
+	_, e2 := db.Exec(insertStmt, offer.Id, offer.Vehicle.Id, offer.Price,
+		offer.Date, offer.Location)
+	CheckError(e2)
+
+	// insert rate into db
+	insertStmt = `insert into "Rate"("id", "offerId", "mark") values($1, $2, $3)`
+	_, e3 := db.Exec(insertStmt, offer.Rates[0].Id, offer.Id, offer.Rates[0].Mark)
+	CheckError(e3)
+
+	// insert comment into db
+	insertStmt = `insert into "Comment"("id", "offerId", "content") values($1, $2, $3)`
+	_, e4 := db.Exec(insertStmt, offer.Comments[0].Id, offer.Id, offer.Comments[0].Content)
+	CheckError(e4)
+
+	fmt.Println("---------- Entities added to db ----------")
+}
+
+/*
+	Delete all entities from all tables
+*/
+func deleteAll() {
+	// connection string
+	psqlconn := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", host, port, user, password, dbname)
+
+	// open database
+	db, err := sql.Open("postgres", psqlconn)
+	CheckError(err)
+
+	// close database when return
+	defer db.Close()
+
+	var insertStmt string
+
+	// delete all from rate
+	insertStmt = `DELETE FROM "Rate"`
+	_, e1 := db.Exec(insertStmt)
+	CheckError(e1)
+
+	// delete all from comment
+	insertStmt = `DELETE FROM "Comment"`
+	_, e2 := db.Exec(insertStmt)
+	CheckError(e2)
+
+	// delete all from offer
+	insertStmt = `DELETE FROM "Offer"`
+	_, e4 := db.Exec(insertStmt)
+	CheckError(e4)
+
+	// delete all from vehicle
+	insertStmt = `DELETE FROM "Vehicle"`
+	_, e3 := db.Exec(insertStmt)
+	CheckError(e3)
+
+}
+
+/*
+	manually create and return offer
+*/
+func getOffer() model.Offer {
+	const layout = "2006-01-02"
+	d, _ := time.Parse(layout, "2020-05-05")
+
+	var offer model.Offer
+	offer.Id = uuid.New().String()
+	offer.Location = "Novi Sad"
+	offer.Date = d
+	offer.Price = 20000
+
+	var vehicle model.Vehicle
+
+	vehicle.Id = uuid.New().String()
+	vehicle.Make = "BMW"
+	vehicle.ModelCar = "320"
+	vehicle.HP = 150
+	vehicle.Cubic = 2000
+
+	vehicle.Date = d
+
+	// add vehicle to offer
+	offer.Vehicle = vehicle
+
+	var comment1 model.Comment
+	comment1.Id = uuid.New().String()
+	comment1.OfferId = offer.Id
+	comment1.Content = "com 1"
+
+	// add comment to offer
+	offer.Comments = append(offer.Comments, comment1)
+
+	var rate1 model.Rate
+	rate1.Id = uuid.New().String()
+	rate1.OfferId = offer.Id
+	rate1.Mark = 3
+
+	// add rate to offer
+	offer.Rates = append(offer.Rates, rate1)
+
+	return offer
 }
 
 func CheckError(err error) {
 	if err != nil {
-		// panic(err)
-		fmt.Println("DB tables are already created.")
-	} else {
-		fmt.Println("DB tables are created. :)")
+		panic(err)
 	}
 }

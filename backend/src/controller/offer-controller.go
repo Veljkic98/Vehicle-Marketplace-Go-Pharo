@@ -21,7 +21,7 @@ var (
 
 func NewOfferController(service service.OfferService) OfferController {
 	offerService = service
-	return &controller{}
+	return &offerController{}
 }
 
 func (*offerController) GetAll(response http.ResponseWriter, request *http.Request) {

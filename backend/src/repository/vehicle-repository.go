@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"model"
 	"time"
+
+	_ "github.com/lib/pq"
 )
 
 type VehicleRepository interface {
@@ -21,10 +23,7 @@ func NewVehicleRepository() VehicleRepository {
 
 func (*vehicleRepo) Save(vehicle *model.Vehicle) (*model.Vehicle, error) {
 
-	fmt.Println("---------------------------------------")
-	fmt.Println(vehicle.Make)
-	fmt.Println(vehicle.Id)
-	fmt.Println(vehicle.Date)
+	fmt.Println("-------------------adding vehicle--------------------")
 
 	// connection string
 	psqlconn := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", host, port, user, password, dbname)

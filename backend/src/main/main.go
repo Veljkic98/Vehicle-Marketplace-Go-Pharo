@@ -2,7 +2,10 @@ package main
 
 func main() {
 	// create needed tables to DB, if they are not already created
-	createTablesDB()
+	// createTablesDB()
+
+	// createAllInit()
+	// deleteAll()
 
 	runServer()
 }

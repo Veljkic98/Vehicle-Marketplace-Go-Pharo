@@ -4,6 +4,8 @@ import (
 	"database/sql"
 	"fmt"
 	"model"
+
+	_ "github.com/lib/pq"
 )
 
 type CommentRepository interface {

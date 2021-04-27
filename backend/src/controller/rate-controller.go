@@ -21,7 +21,7 @@ var (
 
 func NewRateController(service service.RateService) RateController {
 	rateService = service
-	return &controller{}
+	return &rateController{}
 }
 
 func (*rateController) GetAll(response http.ResponseWriter, request *http.Request) {

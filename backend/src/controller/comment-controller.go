@@ -21,7 +21,7 @@ var (
 
 func NewCommentController(service service.CommentService) CommentController {
 	commentService = service
-	return &controller{}
+	return &commentController{}
 }
 
 func (*commentController) GetAll(response http.ResponseWriter, request *http.Request) {
