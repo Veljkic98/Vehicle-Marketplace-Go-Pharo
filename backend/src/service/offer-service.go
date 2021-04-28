@@ -4,6 +4,7 @@ import (
 	"errors"
 	"model"
 	"repository"
+	"time"
 )
 
 type OfferService interface {
@@ -66,10 +67,12 @@ func (*offerService) Validate(offerRequest *model.OfferRequest) error {
 		return err
 	}
 
-	// if offerRequest.ProductionDate == time. {
-	// 	err := errors.New("the vehicle price is empty.")
-	// 	return err
-	// }
+	var zeroTime time.Time
+
+	if offerRequest.ProductionDate == zeroTime {
+		err := errors.New("the vehicle date is empty.")
+		return err
+	}
 
 	return nil
 }
