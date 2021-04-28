@@ -217,7 +217,7 @@ func searchPreprocess(search *model.Search) {
 func filterByDate(offers []model.Offer, dateFrom time.Time, dateTo time.Time) []model.Offer {
 
 	for idx, offer := range offers {
-		if !(offer.Date.After(dateFrom) && offer.Date.Before(dateTo)) {
+		if !(offer.Vehicle.Date.After(dateFrom) && offer.Vehicle.Date.Before(dateTo)) {
 			return append(offers[0:idx], offers[idx+1:]...)
 		}
 	}
@@ -259,16 +259,16 @@ func getOfferFromRequest(offerRequest *model.OfferRequest) *model.Offer {
 	vehicle.Cubic = offerRequest.Cubic
 
 	// Empty comment and rate lists
-	// comments := []model.Comment{}
-	// rates := []model.Rate{}
+	comments := []model.Comment{}
+	rates := []model.Rate{}
 
 	var offer model.Offer
 	offer.Id = uuid.New().String()
 	offer.Location = offerRequest.Location
 	offer.Price = offerRequest.Price
 	offer.Date = time.Now() // TODO: proveriti sta ovde vraca
-	// offer.Comments = comments
-	// offer.Rates = rates
+	offer.Comments = comments
+	offer.Rates = rates
 	offer.Vehicle = vehicle
 
 	return &offer

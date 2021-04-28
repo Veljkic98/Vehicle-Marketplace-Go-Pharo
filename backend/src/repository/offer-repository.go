@@ -40,27 +40,17 @@ func (*offerRepo) Save(offerRequest *model.OfferRequest) (*model.Offer, error) {
 	///////////// vehicle offer rate comment
 
 	// insert vehicle to db
-	// date := offer.Vehicle.Date.String()
-	// insertStmtVehicle := `insert into "Vehicle"("id", "make", "model", "date", "hp", "cubic") values($1, $2, $3, $4, $5, $6)`
-	// _, eVehicle := db.Exec(insertStmtVehicle, offer.Vehicle.Id, offer.Vehicle.Make, offer.Vehicle.ModelCar,
-	// 	date[0:10], offer.Vehicle.HP, offer.Vehicle.Cubic)
-	// CheckError(eVehicle)
+	date := offer.Vehicle.Date.String()
+	insertStmtVehicle := `insert into "Vehicle"("id", "make", "model", "date", "hp", "cubic") values($1, $2, $3, $4, $5, $6)`
+	_, eVehicle := db.Exec(insertStmtVehicle, offer.Vehicle.Id, offer.Vehicle.Make, offer.Vehicle.ModelCar,
+		date[0:10], offer.Vehicle.HP, offer.Vehicle.Cubic)
+	CheckError(eVehicle)
 
 	// insert offer to db
-	// publishDate := offer.Date.String()
-	// insertStmtOffer := `insert into "Offer"("id", "vehicleId", "price", "publishDate", "location") values($1, $2, $3, $4, $5)`
-	// _, eOffer := db.Exec(insertStmtOffer, offer.Id, offer.Vehicle.Id, offer.Price, publishDate[0:10], offer.Location)
-	// CheckError(eOffer)
-
-	// insert rate into db
-	// insertStmtRate := `insert into "Rate"("id", "offerId", "mark") values($1, $2, $3)`
-	// _, eRate := db.Exec(insertStmtRate, offer.Rates[0].Id, offer.Id, offer.Rates[0].Mark)
-	// CheckError(eRate)
-
-	// insert comment into db
-	// insertStmtComment := `insert into "Comment"("id", "offerId", "content") values($1, $2, $3)`
-	// _, eComment := db.Exec(insertStmtComment, offer.Comments[0].Id, offer.Id, offer.Comments[0].Content)
-	// CheckError(eComment)
+	publishDate := offer.Date.String()
+	insertStmtOffer := `insert into "Offer"("id", "vehicleId", "price", "publishDate", "location") values($1, $2, $3, $4, $5)`
+	_, eOffer := db.Exec(insertStmtOffer, offer.Id, offer.Vehicle.Id, offer.Price, publishDate[0:10], offer.Location)
+	CheckError(eOffer)
 
 	fmt.Println("Printamo offer da vidimo sta smo napravili")
 	fmt.Println(offer)
