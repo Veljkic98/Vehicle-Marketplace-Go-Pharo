@@ -34,7 +34,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"make\": \"Mercsss\",\r\n    \"model\": \"S\",\r\n    \"date\": \"2020-02-02T15:23:59+05:00\",\r\n    \"hp\": 116,\r\n    \"cubic\": 1600\r\n}",
+							"raw": "{\r\n    \"make\": \"Mercedes\",\r\n    \"model\": \"S\",\r\n    \"date\": \"2020-02-02T15:23:59+05:00\",\r\n    \"hp\": 186,\r\n    \"cubic\": 2000\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -70,6 +70,136 @@
 							"path": [
 								"vehicles",
 								"delete-all"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Offer",
+			"item": [
+				{
+					"name": "GET ALL",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"make\": \"\",\r\n    \"model\": \"\",\r\n    \"location\": \"\",\r\n    \"priceFrom\": null,\r\n    \"priceTo\": null,\r\n    \"dateFrom\": \"2004-02-02T15:23:59+05:00\",\r\n    \"dateTo\": \"2020-08-02T15:23:59+05:00\",\r\n    \"hpFrom\": 50,\r\n    \"hpTo\": 700,\r\n    \"cubicFrom\": 800,\r\n    \"cubicTo\": 4000,\r\n    \"sort\": \"hpDescending\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/offers",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"offers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"price\": 250000,\r\n    \"location\": \"Tutin\",\r\n    \"make\": \"Porsche\",\r\n    \"modelCar\": \"911 Turbo S\",\r\n    \"productionDate\": \"2019-03-02T15:23:59+05:00\",\r\n    \"hp\": 650,\r\n    \"cubic\": 3900\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/offers",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"offers"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Comment",
+			"item": [
+				{
+					"name": "POST",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"offerId\": \"92f5c044-1e3b-4e59-981f-5e3effc7accf\",\r\n    \"content\": \"novi komentar 1 ccf\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/comments",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"comments"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Rate",
+			"item": [
+				{
+					"name": "POST",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"offerId\": \"92f5c044-1e3b-4e59-981f-5e3effc7accf\",\r\n    \"mark\": 5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/rates",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"rates"
 							]
 						}
 					},
