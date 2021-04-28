@@ -9,7 +9,7 @@ import (
 )
 
 type CommentRepository interface {
-	// Save(comment *model.Comment) (*model.Comment, error)
+	Save(comment *model.Comment) (*model.Comment, error)
 	FindAll() ([]model.Comment, error)
 	// DeleteAll()
 }
@@ -18,6 +18,28 @@ type commentRepo struct{}
 
 func NewCommentRepository() CommentRepository {
 	return &commentRepo{}
+}
+
+func (*commentRepo) Save(comment *model.Comment) (*model.Comment, error) {
+
+	fmt.Println("------------------- Adding comment --------------------")
+
+	// connection string
+	psqlconn := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", host, port, user, password, dbname)
+
+	// open database
+	db, err := sql.Open("postgres", psqlconn)
+	CheckErrorVehicle(err)
+
+	// close database when return
+	defer db.Close()
+
+	// insert to db
+	insertStmt := `insert into "Comment"("id", "offerId", "content") values($1, $2, $3)`
+	_, e := db.Exec(insertStmt, comment.Id, comment.OfferId, comment.Content)
+	CheckErrorVehicle(e)
+
+	return comment, nil
 }
 
 func (*commentRepo) FindAll() ([]model.Comment, error) {

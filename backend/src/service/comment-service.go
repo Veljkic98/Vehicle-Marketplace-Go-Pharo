@@ -4,11 +4,13 @@ import (
 	"errors"
 	"model"
 	"repository"
+
+	"github.com/google/uuid"
 )
 
 type CommentService interface {
 	Validate(comment *model.Comment) error
-	// Create(comment *model.Comment) (*model.Comment, error)
+	Create(comment *model.Comment) (*model.Comment, error)
 	FindAll() ([]model.Comment, error)
 	// DeleteAll()
 }
@@ -22,6 +24,13 @@ var (
 func NewCommentService(repo repository.CommentRepository) CommentService {
 	commentRepo = repo
 	return &commentService{}
+}
+
+func (*commentService) Create(comment *model.Comment) (*model.Comment, error) {
+
+	comment.Id = uuid.New().String()
+
+	return commentRepo.Save(comment)
 }
 
 func (*commentService) Validate(comment *model.Comment) error {

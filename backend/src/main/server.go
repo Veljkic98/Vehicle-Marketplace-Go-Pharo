@@ -19,6 +19,10 @@ var (
 	offerService    service.OfferService       = service.NewOfferService(offerRepository)
 	offerController controller.OfferController = controller.NewOfferController(offerService)
 
+	commentRepository repository.CommentRepository = repository.NewCommentRepository()
+	commentService    service.CommentService       = service.NewCommentService(commentRepository)
+	commentController controller.CommentController = controller.NewCommentController(commentService)
+
 	httpRouter router.Router = router.NewMuxRouter()
 )
 
@@ -29,11 +33,16 @@ func runServer() {
 		fmt.Println(w, "Up and runing")
 	})
 
+	// Vehicles
 	httpRouter.GET("/vehicles", vehicleController.GetAll)
 	httpRouter.POST("/vehicles", vehicleController.Save)
 	httpRouter.DELETE("/vehicles/delete-all", vehicleController.DeleteAll)
 
+	// Offers
 	httpRouter.GET("/offers", offerController.GetAll)
+
+	// Comments
+	httpRouter.POST("/comments", commentController.Save)
 
 	httpRouter.SERVE(port)
 }
