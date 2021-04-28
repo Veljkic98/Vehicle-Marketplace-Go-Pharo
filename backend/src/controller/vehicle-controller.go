@@ -42,7 +42,6 @@ func (*vehicleController) GetAll(response http.ResponseWriter, request *http.Req
 
 func (*vehicleController) Save(response http.ResponseWriter, request *http.Request) {
 
-	fmt.Println("-------------------save vehicle controller-----------------------")
 	response.Header().Set("Content-Type", "application/json")
 
 	var vehicle model.Vehicle

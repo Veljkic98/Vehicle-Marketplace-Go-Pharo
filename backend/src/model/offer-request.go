@@ -4,12 +4,9 @@ import "time"
 
 type OfferRequest struct {
 	// offer properties
-	Id          string    `json:"id"`
-	Price       int       `json:"price"`
-	PublishDate time.Time `json:"publishDate"` // publish date = now
-	Location    string    `json:"location"`
-	Rates       []Rate    `json:"rates"`
-	Comments    []Comment `json:"comments"`
+	Price int `json:"price"`
+	// PublishDate time.Time `json:"publishDate"` // publish date = now
+	Location string `json:"location"`
 
 	// vehicle properties
 	Make           string    `json:"make"`

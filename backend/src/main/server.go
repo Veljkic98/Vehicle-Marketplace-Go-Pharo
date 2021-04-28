@@ -44,6 +44,7 @@ func runServer() {
 
 	// Offers
 	httpRouter.GET("/offers", offerController.GetAll)
+	httpRouter.POST("/offers", offerController.Save)
 
 	// Comments
 	httpRouter.POST("/comments", commentController.Save)

@@ -10,7 +10,7 @@ import (
 
 type OfferController interface {
 	GetAll(response http.ResponseWriter, request *http.Request)
-	// Save(response http.ResponseWriter, request *http.Request)
+	Save(response http.ResponseWriter, request *http.Request)
 	// DeleteAll(response http.ResponseWriter, request *http.Request)
 }
 
@@ -23,6 +23,42 @@ var (
 func NewOfferController(service service.OfferService) OfferController {
 	offerService = service
 	return &offerController{}
+}
+
+func (*offerController) Save(response http.ResponseWriter, request *http.Request) {
+
+	response.Header().Set("Content-Type", "application/json")
+
+	var offerRequest model.OfferRequest
+
+	err := json.NewDecoder(request.Body).Decode(&offerRequest)
+
+	if err != nil {
+		response.WriteHeader(http.StatusInternalServerError)
+		json.NewEncoder(response).Encode(model.ServiceError{Message: "Error unmarshaling data"})
+		fmt.Println("Greska1")
+		return
+	}
+
+	err1 := offerService.Validate(&offerRequest)
+
+	if err1 != nil {
+		response.WriteHeader(http.StatusInternalServerError)
+		json.NewEncoder(response).Encode(model.ServiceError{Message: err1.Error()})
+		fmt.Println("Greska2")
+		return
+	}
+
+	result, err2 := offerService.Create(&offerRequest)
+
+	if err2 != nil {
+		response.WriteHeader(http.StatusInternalServerError)
+		json.NewEncoder(response).Encode(model.ServiceError{Message: "Error saving the offer."})
+		return
+	}
+
+	response.WriteHeader((http.StatusOK))
+	json.NewEncoder(response).Encode(result)
 }
 
 func (*offerController) GetAll(response http.ResponseWriter, request *http.Request) {

@@ -23,14 +23,14 @@ func NewVehicleRepository() VehicleRepository {
 
 func (*vehicleRepo) Save(vehicle *model.Vehicle) (*model.Vehicle, error) {
 
-	fmt.Println("-------------------adding vehicle--------------------")
+	fmt.Println("------------------- adding vehicle --------------------")
 
 	// connection string
 	psqlconn := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", host, port, user, password, dbname)
 
 	// open database
 	db, err := sql.Open("postgres", psqlconn)
-	CheckErrorVehicle(err)
+	CheckError(err)
 
 	// close database when return
 	defer db.Close()
@@ -38,7 +38,7 @@ func (*vehicleRepo) Save(vehicle *model.Vehicle) (*model.Vehicle, error) {
 	// insert to db
 	insertStmt := `insert into "Vehicle"("id", "make", "model", "date", "hp", "cubic") values($1, $2, $3, $4, $5, $6)`
 	_, e := db.Exec(insertStmt, vehicle.Id, vehicle.Make, vehicle.ModelCar, vehicle.Date, vehicle.HP, vehicle.Cubic)
-	CheckErrorVehicle(e)
+	CheckError(e)
 
 	return vehicle, nil
 }
@@ -50,13 +50,13 @@ func (*vehicleRepo) FindAll() ([]model.Vehicle, error) {
 
 	// open database
 	db, err := sql.Open("postgres", psqlconn)
-	CheckErrorVehicle(err)
+	CheckError(err)
 
 	// close database
 	defer db.Close()
 
 	rows, err := db.Query(`SELECT "id", "make", "model", "date", "hp", "cubic" FROM "Vehicle"`)
-	CheckErrorVehicle(err)
+	CheckError(err)
 
 	defer rows.Close()
 
@@ -71,7 +71,7 @@ func (*vehicleRepo) FindAll() ([]model.Vehicle, error) {
 		var cubic int
 
 		err = rows.Scan(&id, &make, &modelCar, &date, &hp, &cubic)
-		CheckErrorVehicle(err)
+		CheckError(err)
 
 		const layout = "2006-01-02"
 		d, _ := time.Parse(layout, date[0:10])
@@ -88,17 +88,17 @@ func (*vehicleRepo) DeleteAll() {
 
 	// open database
 	db, err := sql.Open("postgres", psqlconn)
-	CheckErrorVehicle(err)
+	CheckError(err)
 
 	// close database when return
 	defer db.Close()
 	// insert to db
 	insertStmt := `DELETE FROM "Vehicle"`
 	_, e := db.Exec(insertStmt)
-	CheckErrorVehicle(e)
+	CheckError(e)
 }
 
-func CheckErrorVehicle(err error) {
+func CheckError(err error) {
 	if err != nil {
 		panic(err)
 	}

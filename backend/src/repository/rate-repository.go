@@ -29,7 +29,7 @@ func (*rateRepo) Save(rate *model.Rate) (*model.Rate, error) {
 
 	// open database
 	db, err := sql.Open("postgres", psqlconn)
-	CheckErrorVehicle(err)
+	CheckError(err)
 
 	// close database when return
 	defer db.Close()
@@ -37,7 +37,7 @@ func (*rateRepo) Save(rate *model.Rate) (*model.Rate, error) {
 	// insert to db
 	insertStmt := `insert into "Rate"("id", "offerId", "mark") values($1, $2, $3)`
 	_, e := db.Exec(insertStmt, rate.Id, rate.OfferId, rate.Mark)
-	CheckErrorVehicle(e)
+	CheckError(e)
 
 	return rate, nil
 }

@@ -10,7 +10,7 @@ import (
 )
 
 type OfferRepository interface {
-	// Save(offer *model.Offer) (*model.Offer, error)
+	Save(offer *model.OfferRequest) (*model.Offer, error)
 	FindAll(search *model.Search) ([]model.Offer, error)
 	// DeleteAll()
 }
@@ -19,6 +19,53 @@ type offerRepo struct{}
 
 func NewOfferRepository() OfferRepository {
 	return &offerRepo{}
+}
+
+func (*offerRepo) Save(offerRequest *model.OfferRequest) (*model.Offer, error) {
+
+	fmt.Println("------------------- adding offer --------------------")
+
+	// connection string
+	psqlconn := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", host, port, user, password, dbname)
+
+	// open database
+	db, err := sql.Open("postgres", psqlconn)
+	CheckError(err)
+
+	// close database when return
+	defer db.Close()
+
+	offer := getOfferFromRequest(offerRequest)
+
+	///////////// vehicle offer rate comment
+
+	// insert vehicle to db
+	// date := offer.Vehicle.Date.String()
+	// insertStmtVehicle := `insert into "Vehicle"("id", "make", "model", "date", "hp", "cubic") values($1, $2, $3, $4, $5, $6)`
+	// _, eVehicle := db.Exec(insertStmtVehicle, offer.Vehicle.Id, offer.Vehicle.Make, offer.Vehicle.ModelCar,
+	// 	date[0:10], offer.Vehicle.HP, offer.Vehicle.Cubic)
+	// CheckError(eVehicle)
+
+	// insert offer to db
+	// publishDate := offer.Date.String()
+	// insertStmtOffer := `insert into "Offer"("id", "vehicleId", "price", "publishDate", "location") values($1, $2, $3, $4, $5)`
+	// _, eOffer := db.Exec(insertStmtOffer, offer.Id, offer.Vehicle.Id, offer.Price, publishDate[0:10], offer.Location)
+	// CheckError(eOffer)
+
+	// insert rate into db
+	// insertStmtRate := `insert into "Rate"("id", "offerId", "mark") values($1, $2, $3)`
+	// _, eRate := db.Exec(insertStmtRate, offer.Rates[0].Id, offer.Id, offer.Rates[0].Mark)
+	// CheckError(eRate)
+
+	// insert comment into db
+	// insertStmtComment := `insert into "Comment"("id", "offerId", "content") values($1, $2, $3)`
+	// _, eComment := db.Exec(insertStmtComment, offer.Comments[0].Id, offer.Id, offer.Comments[0].Content)
+	// CheckError(eComment)
+
+	fmt.Println("Printamo offer da vidimo sta smo napravili")
+	fmt.Println(offer)
+
+	return offer, nil
 }
 
 func (*offerRepo) FindAll(search *model.Search) ([]model.Offer, error) {

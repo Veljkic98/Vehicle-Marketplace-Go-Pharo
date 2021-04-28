@@ -29,7 +29,7 @@ func (*commentRepo) Save(comment *model.Comment) (*model.Comment, error) {
 
 	// open database
 	db, err := sql.Open("postgres", psqlconn)
-	CheckErrorVehicle(err)
+	CheckError(err)
 
 	// close database when return
 	defer db.Close()
@@ -37,7 +37,7 @@ func (*commentRepo) Save(comment *model.Comment) (*model.Comment, error) {
 	// insert to db
 	insertStmt := `insert into "Comment"("id", "offerId", "content") values($1, $2, $3)`
 	_, e := db.Exec(insertStmt, comment.Id, comment.OfferId, comment.Content)
-	CheckErrorVehicle(e)
+	CheckError(e)
 
 	return comment, nil
 }

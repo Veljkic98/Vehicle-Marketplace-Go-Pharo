@@ -6,6 +6,8 @@ import (
 	"model"
 	"sort"
 	"time"
+
+	"github.com/google/uuid"
 )
 
 /*
@@ -243,4 +245,31 @@ func sortByDate(offers []model.Offer, sortStr string) []model.Offer {
 
 	return offers
 
+}
+
+func getOfferFromRequest(offerRequest *model.OfferRequest) *model.Offer {
+
+	// Create vehicle
+	var vehicle model.Vehicle
+	vehicle.Id = uuid.New().String()
+	vehicle.Make = offerRequest.Make
+	vehicle.ModelCar = offerRequest.ModelCar
+	vehicle.Date = offerRequest.ProductionDate
+	vehicle.HP = offerRequest.HP
+	vehicle.Cubic = offerRequest.Cubic
+
+	// Empty comment and rate lists
+	// comments := []model.Comment{}
+	// rates := []model.Rate{}
+
+	var offer model.Offer
+	offer.Id = uuid.New().String()
+	offer.Location = offerRequest.Location
+	offer.Price = offerRequest.Price
+	offer.Date = time.Now() // TODO: proveriti sta ovde vraca
+	// offer.Comments = comments
+	// offer.Rates = rates
+	offer.Vehicle = vehicle
+
+	return &offer
 }

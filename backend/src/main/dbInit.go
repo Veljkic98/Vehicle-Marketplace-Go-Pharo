@@ -102,15 +102,17 @@ func createAllInit() {
 	var insertStmt string
 
 	// insert vehicle into db
+	date := offer.Vehicle.Date.String()
 	insertStmt = `insert into "Vehicle"("id", "make", "model", "date", "hp", "cubic") values($1, $2, $3, $4, $5, $6)`
 	_, e1 := db.Exec(insertStmt, offer.Vehicle.Id, offer.Vehicle.Make, offer.Vehicle.ModelCar,
-		offer.Vehicle.Date, offer.Vehicle.HP, offer.Vehicle.Cubic)
+		date[0:10], offer.Vehicle.HP, offer.Vehicle.Cubic)
 	CheckError(e1)
 
 	// insert offer into db
+	publishDate := offer.Date.String()
 	insertStmt = `insert into "Offer"("id", "vehicleId", "price", "publishDate", "location") values($1, $2, $3, $4, $5)`
 	_, e2 := db.Exec(insertStmt, offer.Id, offer.Vehicle.Id, offer.Price,
-		offer.Date, offer.Location)
+		publishDate[0:10], offer.Location)
 	CheckError(e2)
 
 	// insert rate into db
