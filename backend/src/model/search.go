@@ -16,8 +16,14 @@ type Search struct {
 	CubicFrom int       `json:"cubicFrom"`
 	CubicTo   int       `json:"cubicTo"`
 
-	// Sort
-	Newest         bool `json:"newest"` // looking offer publish date
-	PriceAscending bool `json:"priceAscending"`
-	HPAscending    bool `json:"hpAscending"`
+	/*
+		value should be:
+		- newest
+		- oldest
+		- priceAscending
+		- priceDescending
+		- hpAscending
+		- hpDescending
+	*/
+	Sort string `json:"sort"`
 }

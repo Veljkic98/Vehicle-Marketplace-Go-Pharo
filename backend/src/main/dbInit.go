@@ -169,21 +169,21 @@ func deleteAll() {
 */
 func getOffer() model.Offer {
 	const layout = "2006-01-02"
-	d, _ := time.Parse(layout, "2020-05-05")
+	d, _ := time.Parse(layout, "2020-07-05")
 
 	var offer model.Offer
 	offer.Id = uuid.New().String()
-	offer.Location = "Novi Sad"
+	offer.Location = "Beograd"
 	offer.Date = d
-	offer.Price = 20000
+	offer.Price = 30000
 
 	var vehicle model.Vehicle
 
 	vehicle.Id = uuid.New().String()
-	vehicle.Make = "BMW"
-	vehicle.ModelCar = "320"
-	vehicle.HP = 150
-	vehicle.Cubic = 2000
+	vehicle.Make = "Mercedes"
+	vehicle.ModelCar = "S"
+	vehicle.HP = 250
+	vehicle.Cubic = 3000
 
 	vehicle.Date = d
 
@@ -193,7 +193,7 @@ func getOffer() model.Offer {
 	var comment1 model.Comment
 	comment1.Id = uuid.New().String()
 	comment1.OfferId = offer.Id
-	comment1.Content = "com 1"
+	comment1.Content = "Neki komentar"
 
 	// add comment to offer
 	offer.Comments = append(offer.Comments, comment1)
@@ -201,7 +201,7 @@ func getOffer() model.Offer {
 	var rate1 model.Rate
 	rate1.Id = uuid.New().String()
 	rate1.OfferId = offer.Id
-	rate1.Mark = 3
+	rate1.Mark = 5
 
 	// add rate to offer
 	offer.Rates = append(offer.Rates, rate1)

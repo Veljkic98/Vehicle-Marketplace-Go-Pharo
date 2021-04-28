@@ -4,6 +4,8 @@ import (
 	"database/sql"
 	"fmt"
 	"model"
+	"sort"
+	"time"
 )
 
 /*
@@ -21,7 +23,7 @@ func getQuery(search *model.Search) string {
 	AND "V"."hp" BETWEEN $3 AND $4
 	AND "V"."cubic" BETWEEN $5 AND $6
 	` + queryFilterMake(search.Make) + queryFilterModel(search.ModelCar) + queryFilterLocation(search.Location) +
-		querySortPrice(search.PriceAscending) + querySortHP(search.HPAscending)
+		querySortPrice(search.Sort) + querySortHP(search.Sort)
 
 	return query
 }
@@ -69,13 +71,15 @@ func queryFilterLocation(location string) string {
 	Return part of query where
 	sorting by price asc or desc
 */
-func querySortPrice(asc bool) string {
+func querySortPrice(sort string) string {
 
-	if asc {
+	if sort == "priceAscending" {
 		return `ORDER BY "O"."price" ASC`
+	} else if sort == "priceDescending" {
+		return `ORDER BY "O"."price" DESC`
 	}
 
-	return `ORDER BY "O"."price" DESC`
+	return ``
 }
 
 /*
@@ -84,13 +88,16 @@ func querySortPrice(asc bool) string {
 
 	Function call must go after querySortPrice().
 */
-func querySortHP(asc bool) string {
+func querySortHP(sort string) string {
 
-	if asc {
-		return `, "V"."hp" ASC`
+	if sort == "hpAscending" {
+		return `ORDER BY "V"."hp" ASC`
+	} else if sort == "hpDescending" {
+		return `ORDER BY "V"."hp" DESC`
 	}
 
-	return `, "V"."hp" DESC`
+	return ``
+
 }
 
 /*
@@ -199,4 +206,41 @@ func searchPreprocess(search *model.Search) {
 	if search.CubicTo == 0 {
 		search.CubicTo = 99999
 	}
+}
+
+/*
+	Remove offers whose publish date
+	is not in dateFrom-dateTo range.
+*/
+func filterByDate(offers []model.Offer, dateFrom time.Time, dateTo time.Time) []model.Offer {
+
+	for idx, offer := range offers {
+		if !(offer.Date.After(dateFrom) && offer.Date.Before(dateTo)) {
+			return append(offers[0:idx], offers[idx+1:]...)
+		}
+	}
+
+	return offers
+}
+
+/*
+	Sort list by publish date.
+
+	If asc is true sort offer by newest,
+	otherwise by oldest.
+*/
+func sortByDate(offers []model.Offer, sortStr string) []model.Offer {
+
+	if sortStr == "newest" { // sort asc
+		sort.Slice(offers, func(i, j int) bool {
+			return offers[i].Date.After(offers[j].Date)
+		})
+	} else if sortStr == "oldest" { //sort desc
+		sort.Slice(offers, func(i, j int) bool {
+			return offers[i].Date.Before(offers[j].Date)
+		})
+	}
+
+	return offers
+
 }

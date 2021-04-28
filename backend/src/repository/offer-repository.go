@@ -43,7 +43,10 @@ func (*offerRepo) FindAll(search *model.Search) ([]model.Offer, error) {
 
 	defer rows.Close()
 
-	var offers []model.Offer
+	offers := []model.Offer{}
+
+	// layout for parse string to date
+	const layout = "2006-01-02"
 
 	for rows.Next() {
 		var id string
@@ -60,9 +63,6 @@ func (*offerRepo) FindAll(search *model.Search) ([]model.Offer, error) {
 		err = rows.Scan(&id, &price, &publishDate, &location,
 			&vehicleId, &make, &modelCar, &date, &hp, &cubic)
 		CheckErrorOffer(err)
-
-		// layout for parse string to date
-		const layout = "2006-01-02"
 
 		// Create vehicle
 		var vehicle model.Vehicle
@@ -85,8 +85,8 @@ func (*offerRepo) FindAll(search *model.Search) ([]model.Offer, error) {
 			Location: location, Vehicle: vehicle, Rates: rates, Comments: comments})
 	}
 
-	// TODO: filter by date manually
-	// TODO: newest
+	offers = filterByDate(offers, search.DateFrom, search.DateTo)
+	offers = sortByDate(offers, search.Sort)
 
 	return offers, nil
 }
