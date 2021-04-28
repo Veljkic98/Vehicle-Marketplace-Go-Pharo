@@ -23,6 +23,10 @@ var (
 	commentService    service.CommentService       = service.NewCommentService(commentRepository)
 	commentController controller.CommentController = controller.NewCommentController(commentService)
 
+	rateRepository repository.RateRepository = repository.NewRateRepository()
+	rateService    service.RateService       = service.NewRateService(rateRepository)
+	rateController controller.RateController = controller.NewRateController(rateService)
+
 	httpRouter router.Router = router.NewMuxRouter()
 )
 
@@ -43,6 +47,9 @@ func runServer() {
 
 	// Comments
 	httpRouter.POST("/comments", commentController.Save)
+
+	// Rates
+	httpRouter.POST("/rates", rateController.Save)
 
 	httpRouter.SERVE(port)
 }

@@ -4,11 +4,13 @@ import (
 	"errors"
 	"model"
 	"repository"
+
+	"github.com/google/uuid"
 )
 
 type RateService interface {
 	Validate(rate *model.Rate) error
-	// Create(rate *model.Rate) (*model.Rate, error)
+	Create(rate *model.Rate) (*model.Rate, error)
 	FindAll() ([]model.Rate, error)
 	// DeleteAll()
 }
@@ -24,6 +26,13 @@ func NewRateService(repo repository.RateRepository) RateService {
 	return &rateService{}
 }
 
+func (*rateService) Create(rate *model.Rate) (*model.Rate, error) {
+
+	rate.Id = uuid.New().String()
+
+	return rateRepo.Save(rate)
+}
+
 func (*rateService) Validate(rate *model.Rate) error {
 
 	if rate == nil {
@@ -33,6 +42,11 @@ func (*rateService) Validate(rate *model.Rate) error {
 
 	if rate.OfferId == "" {
 		err := errors.New("the offer id is empty.")
+		return err
+	}
+
+	if rate.Mark < 0 || rate.Mark > 5 {
+		err := errors.New("Mark must be in range 1-5.")
 		return err
 	}
 

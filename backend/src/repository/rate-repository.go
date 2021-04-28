@@ -9,7 +9,7 @@ import (
 )
 
 type RateRepository interface {
-	// Save(rate *model.Rate) (*model.Rate, error)
+	Save(rate *model.Rate) (*model.Rate, error)
 	FindAll() ([]model.Rate, error)
 	// DeleteAll()
 }
@@ -18,6 +18,28 @@ type rateRepo struct{}
 
 func NewRateRepository() RateRepository {
 	return &rateRepo{}
+}
+
+func (*rateRepo) Save(rate *model.Rate) (*model.Rate, error) {
+
+	fmt.Println("------------------- Adding rate --------------------")
+
+	// connection string
+	psqlconn := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", host, port, user, password, dbname)
+
+	// open database
+	db, err := sql.Open("postgres", psqlconn)
+	CheckErrorVehicle(err)
+
+	// close database when return
+	defer db.Close()
+
+	// insert to db
+	insertStmt := `insert into "Rate"("id", "offerId", "mark") values($1, $2, $3)`
+	_, e := db.Exec(insertStmt, rate.Id, rate.OfferId, rate.Mark)
+	CheckErrorVehicle(e)
+
+	return rate, nil
 }
 
 func (*rateRepo) FindAll() ([]model.Rate, error) {

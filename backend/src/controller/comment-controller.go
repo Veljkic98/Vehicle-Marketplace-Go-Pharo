@@ -53,7 +53,7 @@ func (*commentController) Save(response http.ResponseWriter, request *http.Reque
 
 	if err2 != nil {
 		response.WriteHeader(http.StatusInternalServerError)
-		json.NewEncoder(response).Encode(model.ServiceError{Message: "Error saving the vehicle."})
+		json.NewEncoder(response).Encode(model.ServiceError{Message: "Error saving the comment."})
 		return
 	}
 
