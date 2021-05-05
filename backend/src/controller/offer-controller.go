@@ -10,6 +10,7 @@ import (
 
 type OfferController interface {
 	GetAll(response http.ResponseWriter, request *http.Request)
+	GetAll2(response http.ResponseWriter, request *http.Request)
 	Save(response http.ResponseWriter, request *http.Request)
 	// DeleteAll(response http.ResponseWriter, request *http.Request)
 }
@@ -77,6 +78,26 @@ func (*offerController) GetAll(response http.ResponseWriter, request *http.Reque
 	}
 
 	offers, err := offerService.FindAll(&search)
+
+	if err != nil {
+		response.WriteHeader(http.StatusInternalServerError)
+		json.NewEncoder(response).Encode(model.ServiceError{Message: "Error getting the offers."})
+	}
+
+	response.WriteHeader(http.StatusOK)
+	json.NewEncoder(response).Encode(offers)
+}
+
+/*
+	Ova metoda je samo dok se razvija klijent.
+
+	Samo dobavljamo sve oglase.
+*/
+func (*offerController) GetAll2(response http.ResponseWriter, request *http.Request) {
+
+	response.Header().Set("Content-Type", "application/json")
+
+	offers, err := offerService.FindAll2()
 
 	if err != nil {
 		response.WriteHeader(http.StatusInternalServerError)

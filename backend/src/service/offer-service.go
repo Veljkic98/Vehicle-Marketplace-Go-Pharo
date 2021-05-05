@@ -11,6 +11,7 @@ type OfferService interface {
 	Validate(offerRequest *model.OfferRequest) error
 	Create(offer *model.OfferRequest) (*model.Offer, error)
 	FindAll(search *model.Search) ([]model.Offer, error)
+	FindAll2() ([]model.Offer, error)
 	// DeleteAll()
 }
 
@@ -80,4 +81,9 @@ func (*offerService) Validate(offerRequest *model.OfferRequest) error {
 func (*offerService) FindAll(search *model.Search) ([]model.Offer, error) {
 
 	return offerRepo.FindAll(search)
+}
+
+func (*offerService) FindAll2() ([]model.Offer, error) {
+
+	return offerRepo.FindAll2()
 }
