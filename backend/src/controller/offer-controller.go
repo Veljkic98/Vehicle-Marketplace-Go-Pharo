@@ -64,9 +64,12 @@ func (*offerController) Save(response http.ResponseWriter, request *http.Request
 
 func (*offerController) GetAll(response http.ResponseWriter, request *http.Request) {
 
+	fmt.Println("*** Call GetAll Search Method ***")
+
 	response.Header().Set("Content-Type", "application/json")
 
 	var search model.Search
+	fmt.Println(request.Body)
 
 	err := json.NewDecoder(request.Body).Decode(&search)
 
@@ -94,6 +97,8 @@ func (*offerController) GetAll(response http.ResponseWriter, request *http.Reque
 	Samo dobavljamo sve oglase.
 */
 func (*offerController) GetAll2(response http.ResponseWriter, request *http.Request) {
+
+	fmt.Println("*** Call GetAll2 Method ***")
 
 	response.Header().Set("Content-Type", "application/json")
 

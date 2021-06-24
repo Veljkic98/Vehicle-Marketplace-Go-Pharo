@@ -127,7 +127,7 @@ func getRatesByOffer(id string) []model.Rate {
 
 	defer rows.Close()
 
-	var rates []model.Rate
+	var rates = []model.Rate{}
 
 	for rows.Next() {
 		var id string
@@ -168,7 +168,8 @@ func getCommentsByOffer(id string) []model.Comment {
 
 	defer rows.Close()
 
-	var comments []model.Comment
+	// var comments []model.Comment
+	var comments = []model.Comment{}
 
 	for rows.Next() {
 		var id string

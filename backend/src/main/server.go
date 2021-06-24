@@ -43,7 +43,7 @@ func runServer() {
 	httpRouter.DELETE("/vehicles/delete-all", vehicleController.DeleteAll)
 
 	// Offers
-	httpRouter.GET("/offers", offerController.GetAll)
+	httpRouter.POST("/offers", offerController.GetAll)
 	httpRouter.GET("/offers/getAll2", offerController.GetAll2)
 	httpRouter.POST("/offers", offerController.Save)
 
