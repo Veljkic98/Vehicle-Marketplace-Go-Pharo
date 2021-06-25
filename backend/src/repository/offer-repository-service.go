@@ -37,7 +37,7 @@ func getQuery(search *model.Search) string {
 func queryFilterMake(make string) string {
 
 	if make != "" {
-		return `AND "V"."make" = '` + make + `'`
+		return `AND "V"."make" ilike '%` + make + `%'`
 	}
 
 	return ``
@@ -50,7 +50,7 @@ func queryFilterMake(make string) string {
 func queryFilterModel(model string) string {
 
 	if model != "" {
-		return `AND "V"."model" = '` + model + `'`
+		return `AND "V"."model" ilike '%` + model + `%'`
 	}
 
 	return ``
@@ -63,7 +63,7 @@ func queryFilterModel(model string) string {
 func queryFilterLocation(location string) string {
 
 	if location != "" {
-		return `AND "O"."location" = '` + location + `'`
+		return `AND "O"."location" ilike '%` + location + `%'`
 	}
 
 	return ``
@@ -198,15 +198,15 @@ func CheckErrorOffer(err error) {
 */
 func searchPreprocess(search *model.Search) {
 
-	if search.PriceTo == 0 {
+	if search.PriceTo <= 0 {
 		search.PriceTo = 99999999
 	}
 
-	if search.HPTo == 0 {
+	if search.HPTo <= 0 {
 		search.HPTo = 9999
 	}
 
-	if search.CubicTo == 0 {
+	if search.CubicTo <= 0 {
 		search.CubicTo = 99999
 	}
 }
