@@ -45,7 +45,7 @@ func (*rateController) Save(response http.ResponseWriter, request *http.Request)
 	if err1 != nil {
 		response.WriteHeader(http.StatusInternalServerError)
 		json.NewEncoder(response).Encode(model.ServiceError{Message: err1.Error()})
-		fmt.Println("Error 2 rate")
+		fmt.Println(err1.Error())
 		return
 	}
 

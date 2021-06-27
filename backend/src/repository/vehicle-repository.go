@@ -23,7 +23,7 @@ func NewVehicleRepository() VehicleRepository {
 
 func (*vehicleRepo) Save(vehicle *model.Vehicle) (*model.Vehicle, error) {
 
-	fmt.Println("------------------- adding vehicle --------------------")
+	fmt.Println("*** Adding vehicle ***")
 
 	// connection string
 	psqlconn := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", host, port, user, password, dbname)

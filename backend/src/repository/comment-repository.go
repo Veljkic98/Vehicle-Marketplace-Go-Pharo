@@ -22,7 +22,7 @@ func NewCommentRepository() CommentRepository {
 
 func (*commentRepo) Save(comment *model.Comment) (*model.Comment, error) {
 
-	fmt.Println("------------------- Adding comment --------------------")
+	fmt.Println("*** Adding comment ***")
 
 	// connection string
 	psqlconn := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", host, port, user, password, dbname)

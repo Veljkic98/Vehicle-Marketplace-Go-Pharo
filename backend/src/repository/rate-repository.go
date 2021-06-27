@@ -22,7 +22,7 @@ func NewRateRepository() RateRepository {
 
 func (*rateRepo) Save(rate *model.Rate) (*model.Rate, error) {
 
-	fmt.Println("------------------- Adding rate --------------------")
+	fmt.Println("*** Adding rate ***")
 
 	// connection string
 	psqlconn := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", host, port, user, password, dbname)

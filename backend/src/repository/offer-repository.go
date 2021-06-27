@@ -24,7 +24,7 @@ func NewOfferRepository() OfferRepository {
 
 func (*offerRepo) Save(offerRequest *model.OfferRequest) (*model.Offer, error) {
 
-	fmt.Println("------------------- adding offer --------------------")
+	fmt.Println("*** Adding offer ***")
 
 	// connection string
 	psqlconn := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", host, port, user, password, dbname)

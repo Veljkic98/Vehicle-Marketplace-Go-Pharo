@@ -98,7 +98,7 @@ func (*offerController) GetAll(response http.ResponseWriter, request *http.Reque
 */
 func (*offerController) GetAll2(response http.ResponseWriter, request *http.Request) {
 
-	fmt.Println("*** Call GetAll2 Method ***")
+	fmt.Println("*** Call GetAll Method ***")
 
 	response.Header().Set("Content-Type", "application/json")
 
