@@ -76,7 +76,7 @@ func (*offerRepo) FindAll(search *model.Search) ([]model.Offer, error) {
 	query := getQuery(search)
 
 	rows, err := db.Query(query, search.PriceFrom, search.PriceTo, search.HPFrom, search.HPTo,
-		search.CubicFrom, search.CubicTo)
+		search.CubicFrom, search.CubicTo, search.DateFrom, search.DateTo)
 	CheckErrorOffer(err)
 
 	defer rows.Close()

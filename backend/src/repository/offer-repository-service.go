@@ -24,6 +24,7 @@ func getQuery(search *model.Search) string {
 	AND "O"."price" BETWEEN $1 AND $2
 	AND "V"."hp" BETWEEN $3 AND $4
 	AND "V"."cubic" BETWEEN $5 AND $6
+	AND "V"."date" BETWEEN $7 AND $8
 	` + queryFilterMake(search.Make) + queryFilterModel(search.ModelCar) + queryFilterLocation(search.Location) +
 		querySortPrice(search.Sort) + querySortHP(search.Sort)
 

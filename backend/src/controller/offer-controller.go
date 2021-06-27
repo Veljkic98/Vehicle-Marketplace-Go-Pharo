@@ -28,6 +28,8 @@ func NewOfferController(service service.OfferService) OfferController {
 
 func (*offerController) Save(response http.ResponseWriter, request *http.Request) {
 
+	fmt.Println("*** Add new offer ***")
+
 	response.Header().Set("Content-Type", "application/json")
 
 	var offerRequest model.OfferRequest
